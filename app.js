@@ -27,6 +27,11 @@ document.getElementById('outputVolume').innerHTML = masterVolume.gain.value;
 const osc1Volume = context.createGain();
 osc1Volume.gain.value = 0;
 document.getElementById('outputOsc1Volume').innerHTML =osc1Volume.gain.value;
+const osc1SubOsc1Volume = context.createGain();
+osc1SubOsc1Volume.gain.value = 0;
+const osc1SubOsc2Volume = context.createGain();
+osc1SubOsc2Volume.gain.value = 0;
+
 const osc2Volume = context.createGain();
 osc2Volume.gain.value = 0;
 document.getElementById('outputOsc2Volume').innerHTML = osc2Volume.gain.value;
@@ -56,7 +61,8 @@ const osc1SubOsc2FreqDiv = document.querySelector('#osc1-subOsc2-freq');
 volumeControl.addEventListener('input', changeVolume);
 osc1vol.addEventListener('input', changeOsc1Vol);
 osc2vol.addEventListener('input', changeOsc2Vol);
-
+osc1SubOsc1Vol.addEventListener('input', changeOsc1SubOsc1Vol);
+osc1SubOsc2Vol.addEventListener('input', changeOsc1SubOsc2Vol);
 
 
 
@@ -65,6 +71,15 @@ function changeOsc1Vol()
     osc1Volume.gain.value = this.value;
     document.getElementById('outputOsc1Volume').innerHTML = this.value;
 
+}
+
+function changeOsc1SubOsc1Vol()
+{
+    osc1SubOsc1Volume.gain.value = this.value;
+}
+function changeOsc1SubOsc2Vol()
+{
+    osc1SubOsc2Volume.gain.value = this.value;
 }
 function changeOsc2Vol()
 {
@@ -115,9 +130,9 @@ startButton.addEventListener('click', function()
     
 
     const osc1subosc1 = context.createOscillator();
-    osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv), 0);
-    osc1subosc1.connect(osc1SubOsc1Vol);
-    osc1SubOsc1Vol.connect(masterVolume);
+    osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv.value), 0);
+    osc1subosc1.connect(osc1SubOsc1Volume);
+    osc1SubOsc1Volume.connect(masterVolume);
     osc.type = waveform;
     osc1subosc1.start(0);
 
@@ -146,13 +161,15 @@ startButton.addEventListener('click', function()
     {
         currentOsc1Freq = this.value;
         osc.frequency.setValueAtTime(currentOsc1Freq,0);
-        osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv),0);
+        osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv.value),0);
         document.getElementById('outputOsc1freq').innerHTML = this.value;
 
 
     });
 
-
+    osc1SubOsc1FreqDiv.addEventListener('input', function(){
+        osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq, osc1SubOsc1FreqDiv.value),0);
+    });
 
     osc2freq.addEventListener('input', function()
     {

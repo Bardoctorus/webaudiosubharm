@@ -11,6 +11,7 @@ TODO:
 - make basic 4 step sequencer []
 - add polyrhythms []
 - filter []
+- add NOISE []
 - ?
 */
 

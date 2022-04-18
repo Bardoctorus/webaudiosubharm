@@ -11,40 +11,65 @@
       </button>
       <br>
       <br>
-      <span>Master Volume</span>
-      <br>
-      <input type="range" id="volume-control" min="0" max="1" step="0.05" value="0.1">
-      <output id="outputVolume"></output>
-      <br>
-      <span>OSC1 Volume</span>
-      <br>
-      <input type="range" id="osc1-vol" min="0" max="1" step="0.05" value="0.1">
-      <output id="outputOsc1Volume"></output>
-      <br>
-      <span>OSC2` Volume</span>
-      <br>
-      <input type="range" id="osc2-vol" min="0" max="1" step="0.05" value="0.1">
-      <output id="outputOsc2Volume"></output>
-      <br>
-      <span>OSC1 freq</span>
-      <br>
-      <input type="range" id="osc1-freq" min="50" max="3000" step="0.01" value="440">
-      <output id="outputOsc1freq"></output>
-      <br>
-      <span>OSC2 freq </span>
-      <br>
-      <input type="range" id="osc2-freq" min="50" max="3000" step="0.01" value="440">
-      <output id="outputOsc2freq"></output>
-      <br>
-      <input type="radio" id="sin-wave" name="waveform" value="sine"
-             checked>
-      <label for="sin-wave">Sin Wave</label><br>
-      <input type="radio" id="square-wave" name="waveform" value="square">
-      <label for="square-wave">Square Wave</label><br>
-      <input type="radio" id="triangle-wave" name="waveform" value="triangle">
-      <label for="triangle-wave">Triangle Wave</label><br>
-      <input type="radio" id="sawtooth-wave" name="waveform" value="sawtooth">
-      <label for="sawtooth">Sawtooth Wave</label>
+      <div style="width: 100%;">
+        <div style="width: 50%; float: left;">       
+          <span>Master Volume</span>
+          <br>
+          <input type="range" id="volume-control" min="0" max="1" step="0.05" value="0.1">
+          <output id="outputVolume"></output>
+          <br>
+          <span>OSC1 Volume</span>
+          <br>
+          <input type="range" id="osc1-vol" min="0" max="1" step="0.05" value="0.1">
+          <output id="outputOsc1Volume"></output>
+          <br>
+          <span>OSC2` Volume</span>
+          <br>
+          <input type="range" id="osc2-vol" min="0" max="1" step="0.05" value="0.1">
+          <output id="outputOsc2Volume"></output>
+          <br>
+          <span>OSC1 freq</span>
+          <br>
+          <input type="range" id="osc1-freq" min="50" max="3000" step="0.01" value="440">
+          <output id="outputOsc1freq"></output>
+          <br>
+          <span>OSC2 freq </span>
+          <br>
+          <input type="range" id="osc2-freq" min="50" max="3000" step="0.01" value="440">
+          <output id="outputOsc2freq"></output>
+          <br>
+          <input type="radio" id="sin-wave" name="waveform" value="sine">
+          <label for="sin-wave">Sin Wave</label><br>
+          <input type="radio" id="square-wave" name="waveform" value="square">
+          <label for="square-wave">Square Wave</label><br>
+          <input type="radio" id="triangle-wave" name="waveform" value="triangle">
+          <label for="triangle-wave">Triangle Wave</label><br>
+          <input type="radio" id="sawtooth-wave" name="waveform" value="sawtooth" checked>
+          <label for="sawtooth">Sawtooth Wave</label>
+        </div>
+        <div style="margin-left: 50%;">
+          <span>OSC1 subOsc1 Volume</span>
+          <br>
+          <input type="range" id="osc1-subOsc1-vol" min="0" max="1" step="0.05" value="0.1">
+          <output id="outputOsc1subOsc1Volume"></output>
+          <br>
+          <span>OSC1 subOsc2 Volume</span>
+          <br>
+          <input type="range" id="osc1-subOsc2-vol" min="0" max="1" step="0.05" value="0.1">
+          <output id="outputOsc1subOsc2Volume"></output>
+          <br>
+          <span>OSC1 subOsc1 freq division</span>
+          <br>
+          <input type="range" id="osc1-subOsc1-freq" min="1" max="16" step="1" value="1">
+          <output id="outputOsc1subOsc1freq"></output>
+          <br>
+          <span>OSC2 subOsc1 freq division</span>
+          <br>
+          <input type="range" id="osc1-subOsc2-freq" min="1" max="16" step="1" value="1">
+          <output id="outputOsc1subOsc2freq"></output>
+          <br>
+        </div>
+       </div>
 <script src="app.js"></script>
 </body>
 </html>

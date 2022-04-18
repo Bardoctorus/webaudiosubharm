@@ -136,6 +136,12 @@ startButton.addEventListener('click', function()
     osc.type = waveform;
     osc1subosc1.start(0);
 
+    const osc1subosc2 = context.createOscillator();
+    osc1subosc2.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc2FreqDiv.value), 0);
+    osc1subosc2.connect(osc1SubOsc2Volume);
+    osc1SubOsc2Volume.connect(masterVolume);
+    osc.type = waveform;
+    osc1subosc2.start(0);
 
     //oscillator 2 initialisation.
     const osc2 = context.createOscillator();
@@ -151,6 +157,8 @@ startButton.addEventListener('click', function()
         delete osc;
         osc1subosc1.stop(0);
         delete osc1subosc1;
+        osc1subosc2.stop(0);
+        delete osc1subosc2;
         osc2.stop(0);
         delete osc2;
     });
@@ -162,6 +170,8 @@ startButton.addEventListener('click', function()
         currentOsc1Freq = this.value;
         osc.frequency.setValueAtTime(currentOsc1Freq,0);
         osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv.value),0);
+        osc1subosc2.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc2FreqDiv.value),0);
+
         document.getElementById('outputOsc1freq').innerHTML = this.value;
 
 
@@ -169,6 +179,10 @@ startButton.addEventListener('click', function()
 
     osc1SubOsc1FreqDiv.addEventListener('input', function(){
         osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq, osc1SubOsc1FreqDiv.value),0);
+    });
+
+    osc1SubOsc2FreqDiv.addEventListener('input', function(){
+        osc1subosc2.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq, osc1SubOsc2FreqDiv.value),0);
     });
 
     osc2freq.addEventListener('input', function()

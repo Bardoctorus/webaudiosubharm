@@ -4,10 +4,10 @@ This works to creat multiple oscillators.
 TODO: 
 - Set up GUI for setting fundamental tone [x]
 - Seperate oscillators so they can have seperate waveshapes []
-- work out subharmonics based on fundamental []
+- work out subharmonics based on fundamental [x]
 - add two subharmonic oscillators to each oscillator on creation (4 in total) []
-- add sliders for choosing subharmonics (with detents) []
-- add per subharmonic oscilaator volume controls []
+- add sliders for choosing subharmonics (with detents) [x]
+- add per subharmonic oscilaator volume controls [x]
 - make basic 4 step sequencer []
 - add polyrhythms []
 - filter []
@@ -37,6 +37,15 @@ osc2Volume.gain.value = 0;
 document.getElementById('outputOsc2Volume').innerHTML = osc2Volume.gain.value;
 masterVolume.connect(context.destination);
 
+
+//make the filter
+let lpf = context.createBiquadFilter();
+lpf.type = "lowpass";
+lpf.frequency.setValueAtTime(100,0);
+lpf.Q.setValueAtTime(15,0);
+lpf.connect(masterVolume);
+
+
 //initial frequencies for the oscillators
 let currentOsc1Freq = 440.00;
 document.getElementById('outputOsc1freq').innerHTML = currentOsc1Freq;
@@ -55,6 +64,23 @@ const osc1SubOsc1Vol = document.querySelector('#osc1-subOsc1-vol');
 const osc1SubOsc2Vol = document.querySelector('#osc1-subOsc2-vol');
 const osc1SubOsc1FreqDiv = document.querySelector('#osc1-subOsc1-freq');
 const osc1SubOsc2FreqDiv = document.querySelector('#osc1-subOsc2-freq');
+const filterFreqinput = document.querySelector('#filter-freq');
+filterFreqinput.addEventListener('input', changeFilterFreq);
+const filterResinput = document.querySelector('#filter-res');
+filterResinput.addEventListener('input', changeFilterRes);
+
+function changeFilterFreq()
+{
+    lpf.frequency.value = this.value;
+    document.getElementById('filter-freq-output').innerHTML = this.value;
+}
+
+function changeFilterRes()
+{
+    lpf.Q.value = this.value;
+    document.getElementById('filter-res-output').innerHTML = this.value;
+}
+
 
 
 
@@ -124,7 +150,7 @@ startButton.addEventListener('click', function()
     const osc = context.createOscillator();
     osc.frequency.setValueAtTime(currentOsc1Freq,0);
     osc.connect(osc1Volume);
-    osc1Volume.connect(masterVolume);
+    osc1Volume.connect(lpf);
     osc.type = waveform;
     osc.start(0);
     
@@ -132,22 +158,22 @@ startButton.addEventListener('click', function()
     const osc1subosc1 = context.createOscillator();
     osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv.value), 0);
     osc1subosc1.connect(osc1SubOsc1Volume);
-    osc1SubOsc1Volume.connect(masterVolume);
-    osc.type = waveform;
+    osc1SubOsc1Volume.connect(lpf);
+    osc1subosc1.type = waveform;
     osc1subosc1.start(0);
 
     const osc1subosc2 = context.createOscillator();
     osc1subosc2.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc2FreqDiv.value), 0);
     osc1subosc2.connect(osc1SubOsc2Volume);
-    osc1SubOsc2Volume.connect(masterVolume);
-    osc.type = waveform;
+    osc1SubOsc2Volume.connect(lpf);
+    osc1subosc2.type = waveform;
     osc1subosc2.start(0);
 
     //oscillator 2 initialisation.
     const osc2 = context.createOscillator();
     osc2.frequency.setValueAtTime(currentOsc2Freq,0);
     osc2.connect(osc2Volume);
-    osc2Volume.connect(masterVolume);
+    osc2Volume.connect(lpf);
     osc2.start(0);
     osc2.type = waveform;
 
@@ -171,10 +197,7 @@ startButton.addEventListener('click', function()
         osc.frequency.setValueAtTime(currentOsc1Freq,0);
         osc1subosc1.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc1FreqDiv.value),0);
         osc1subosc2.frequency.setValueAtTime(setSubOscfreq(currentOsc1Freq,osc1SubOsc2FreqDiv.value),0);
-
         document.getElementById('outputOsc1freq').innerHTML = this.value;
-
-
     });
 
     osc1SubOsc1FreqDiv.addEventListener('input', function(){
@@ -190,9 +213,6 @@ startButton.addEventListener('click', function()
         currentOsc2Freq = this.value;
         osc2.frequency.setValueAtTime(currentOsc2Freq,0);
         document.getElementById('outputOsc2freq').innerHTML = this.value;
-
-
-
     });
 });
 
